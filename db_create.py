@@ -1,6 +1,8 @@
 from app import db
 from app.models import Book
 
+db.drop_all()
+
 db.create_all()
 
 book1 = Book('The Girl on the Train', '9789044971453')

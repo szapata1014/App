@@ -3,7 +3,7 @@ from app.models import Book
 from .forms import AddBookForm
 from app import db
 
-book_blueprint = Blueprint('book', __name__, template_folder = 'templates')
+book_blueprint = Blueprint('book', __name__)
 
 def flash_errors(form):
 	for field, errors in form.errors.items():
