@@ -16,18 +16,18 @@ class Book(db.Model):
 		return '<title {}'.format(self.name)
 
 class User(db.Model):
-	__tablename__ = 'user'
+	__tablename__ = 'users'
 	
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	email = db.Column(db.String, unique=True, nullable=False)
-    	password_plaintext = db.Column(db.String, nullable=False)  # TEMPORARY - TO BE DELETED IN FAVOR OF HASHED PASSWORD
+    	password_plaintext = db.Column(db.String, nullable=False)
  	authenticated = db.Column(db.Boolean, default=False)
 
     	def __init__(self, email, password_plaintext):
         	self.email = email
         	self.password_plaintext = password_plaintext
 		self.authenticated = False
-
+		
 	@hybrid_method
     	def is_correct_password(self, plaintext_password):
         	return self.password_plaintext == plaintext_password

@@ -1,9 +1,12 @@
 from flask import render_template, Blueprint, request, url_for, flash, redirect
 from sqlalchemy.exc import IntegrityError
 from flask_login import login_user, current_user, login_required, logout_user
+from flask_mail import Message
+from threading import Thread
+
 from app.models import User
 from .forms import RegisterForm, LoginForm
-from app import db
+from app import db, mail, app
 
 user_blueprint = Blueprint('user', __name__)
 
@@ -11,6 +14,17 @@ def flask_errors(form):
 	for field, errors in form.errors.items():
 		for error in errors:
 			flash(u"Error in the %s field - %s" % (getattr(form, field).label.text, error), 'info')
+
+def send_async_email(msg):
+	with app.app_context():
+		mail.send(msg)
+
+def send_email(subject, recipients, text_body, html_body):
+	msg = Message(subject, recipients=recipients)
+	msg.body = text_body
+	msg.html = html_body
+	thr = Thread(target=send_async_email, args=[msg])
+	thr.start()	
 
 @user_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
@@ -22,6 +36,9 @@ def register():
                 		new_user.authenticated = True
                 		db.session.add(new_user)
                 		db.session.commit()
+
+				send_email('Registration', ['sydspitz@gmail.com'], 'Thanks for registering with Explore Your Shelf!', '<h3>Thanks for registering with Explore Your Shelf</h3>')		
+
                 		flash('Thanks for registering!', 'success')
                 		return redirect(url_for('book.index'))
             		except IntegrityError:

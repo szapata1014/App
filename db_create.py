@@ -1,5 +1,5 @@
 from app import db
-from app.models import Book
+from app.models import Book, User
 
 db.drop_all()
 
@@ -11,6 +11,11 @@ book3 = Book('The BFG', '9780142410387')
 db.session.add(book1)
 db.session.add(book2)
 db.session.add(book3)
+
+user1 = User('sofiacamizapata@gmail.com', 'password')
+user2 = User('szapata1@stevens.edu', 'password')
+db.session.add(user1)
+db.session.add(user2)
 
 db.session.commit()
 
