@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+ 
+<div class="user-profile">
+  <div class="page-header">
+    <h2>Available Books</h2>
+  </div>
+ 
+  <table class="table table-striped" id="owned_stock_table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>ISBN</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for book in public_books %}
+      <tr>
+        <td>{{ book.title }}</td>
+        <td>{{ book.isbn }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+ 
+{% endblock %}

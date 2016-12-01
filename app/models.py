@@ -8,11 +8,15 @@ class Book(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	title = db.Column(db.String, nullable=False)
 	isbn = db.Column(db.String, nullable=False)
+	is_public = db.Column(db.Boolean, nullable=False)
+	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-	def __init__(self, title, isbn):
+	def __init__(self, title, isbn, user_id, is_public):
 		self.title = title
 		self.isbn = isbn
-
+		self.user_id = user_id
+		self.is_public = is_public
+ 
 	def __repr__(self):
 		return '<title {}'.format(self.name)
 
@@ -30,6 +34,7 @@ class User(db.Model):
 	last_logged_in = db.Column(db.DateTime, nullable=True)
 	current_logged_in = db.Column(db.DateTime, nullable=True)
 	role = db.Column(db.String, default = 'user')
+	books = db.relationship('Book', backref='user', lazy='dynamic')
 
     	def __init__(self, email, password_plaintext, email_confirmation_sent_on=None, role = 'user'):
         	self.email = email
