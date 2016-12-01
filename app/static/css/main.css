@@ -1,0 +1,9 @@
+body {
+  padding-top: 70px;
+  background: #ffffff;
+}
+
+.error {
+  color: red;
+  font-size: .8em;
+}
