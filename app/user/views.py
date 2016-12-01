@@ -3,6 +3,8 @@ from sqlalchemy.exc import IntegrityError
 from flask_login import login_user, current_user, login_required, logout_user
 from flask_mail import Message
 from threading import Thread
+from itsdangerous import URLSafeTimedSerializer
+from datetime import datetime
 
 from app.models import User
 from .forms import RegisterForm, LoginForm
@@ -19,12 +21,21 @@ def send_async_email(msg):
 	with app.app_context():
 		mail.send(msg)
 
-def send_email(subject, recipients, text_body, html_body):
+def send_email(subject, recipients, html_body):
 	msg = Message(subject, recipients=recipients)
-	msg.body = text_body
 	msg.html = html_body
 	thr = Thread(target=send_async_email, args=[msg])
 	thr.start()	
+
+def send_confirmation_email(user_email):
+	confirm_serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+    	
+	confirm_url = url_for('user.confirm_email', token=confirm_serializer.dumps(user_email, salt='email-confirmation-salt'),
+        _external=True)
+    
+	html = render_template('email_confirmation.html', confirm_url=confirm_url)
+    
+	send_email('Confirm Your Email Address', [user_email], html)
 
 @user_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
@@ -37,10 +48,10 @@ def register():
                 		db.session.add(new_user)
                 		db.session.commit()
 
-				send_email('Registration', ['sydspitz@gmail.com'], 'Thanks for registering with Explore Your Shelf!', '<h3>Thanks for registering with Explore Your Shelf</h3>')		
-
-                		flash('Thanks for registering!', 'success')
-                		return redirect(url_for('book.index'))
+				send_confirmation_email(new_user.email)
+                		flash('Thanks for registering!  Please check your email to confirm your email address.', 'success')
+                		
+				return redirect(url_for('book.index'))
             		except IntegrityError:
                			db.session.rollback()
                 		flash('ERROR! Email ({}) already exists.'.format(form.email.data), 'error')
@@ -67,8 +78,6 @@ def login():
 	return render_template('login.html', form=form)
 
 
-
-
 @user_blueprint.route('/logout')
 @login_required
 def logout():
@@ -80,4 +89,22 @@ def logout():
     	flash('Goodbye!', 'info')
     	return redirect(url_for('user.login'))
 
+@user_blueprint.route('/confirm/<token>')
+def confirm_email(token):
+    	try:
+        	confirm_serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+        	email = confirm_serializer.loads(token, salt='email-confirmation-salt', max_age=3600)
+    	except:
+        	flash('The confirmation link is invalid or has expired.', 'error')
+        	return redirect(url_for('user.login'))
+    	user = User.query.filter_by(email=email).first()
+    	if user.email_confirmed:
+        	flash('Account already confirmed. Please login.', 'info')
+    	else:
+        	user.email_confirmed = True
+        	user.email_confirmed_on = datetime.now()
+        	db.session.add(user)
+        	db.session.commit()
+        	flash('Thank you for confirming your email address!', 'success')
+    	return redirect(url_for('book.index'))
 
