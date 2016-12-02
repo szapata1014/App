@@ -25,7 +25,11 @@
       <div class="panel-heading">User</div>
       <div class="panel-body">{{ book.User.email }}</div>
     </div>
- 
+
+    {% if book.Book.image_url %}
+	<img src="{{ book.Book.image_url }}" alt="{{ book.Book.image_filename }}">
+    {% endif %}
+  
   </div>
 </div>`
  

@@ -2,7 +2,7 @@ from flask import render_template, Blueprint, request, url_for, flash, redirect
 from flask_login import login_required, current_user
 from app.models import Book, User
 from .forms import AddBookForm
-from app import db
+from app import db, images
 
 book_blueprint = Blueprint('book', __name__)
 
@@ -25,10 +25,12 @@ def user_books():
 
 @book_blueprint.route('/add', methods=['GET', 'POST'])
 def add_book():
-	form = AddBookForm(request.form)
+	form = AddBookForm()
 	if request.method == 'POST':
 		if form.validate_on_submit():
-			new_book = Book(form.title.data, form.isbn.data, current_user.id, True)
+			filename = images.save(request.files['book_image'])
+			url = images.url(filename)
+			new_book = Book(form.title.data, form.isbn.data, current_user.id, True, filename, url)
 			db.session.add(new_book)
 			db.session.commit()
 			flash('New book, {}, added!'.format(new_book.title), 'success')
