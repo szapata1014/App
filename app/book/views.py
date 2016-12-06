@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request, url_for, flash, redirect
+from flask import render_template, Blueprint, request, url_for, flash, redirect, g
 from flask_login import login_required, current_user
 from app.models import Book, User, BookSearch
 from .forms import AddBookForm, SearchBookForm, AddBookFromSearch
@@ -12,6 +12,9 @@ def flash_errors(form):
 		for error in errors:
 			flash(u"Error in the %s field - %s" % (getattr(form, field).label.text,error), 'info')
 
+@book_blueprint.before_request
+def before_request():
+    g.searchform = SearchBookForm()
 
 @book_blueprint.route('/')
 def home():
@@ -49,18 +52,18 @@ def user_books():
 #	return render_template('add_book.html', form=form)
 
 @book_blueprint.route('/add', methods=['GET', 'POST'])
-def search_book():
+def add_book():
 	form = SearchBookForm()
 	if request.method == 'POST':
 		if form.validate_on_submit():
-			return redirect(url_for('book.search_results', query=form.search.data))
+			return redirect(url_for('book.add_results', query=form.search.data))
 		else:
 			flash_errors(form)
 			flash('ERROR! Could not find book.', 'error')
-	return render_template('search_book.html', form=form)
+	return render_template('add_book.html', form=form)
 
-@book_blueprint.route('/search_results/<query>', methods=['GET', 'POST'])
-def search_results(query):
+@book_blueprint.route('/add_results/<query>', methods=['GET', 'POST'])
+def add_results(query):
 	form = AddBookFromSearch()
 	if request.method == 'POST':
 		if form.validate_on_submit():
@@ -77,11 +80,20 @@ def search_results(query):
 
 	else:
 		results = BookSearch.query.whoosh_search(query, MAX_SEARCH_RESULTS).all()
-		return render_template('book_search_results.html',
+		return render_template('add_book_results.html',
 							query=query,
 							results=results,
 							form=form)
 
+@book_blueprint.route('/search', methods=['POST'])
+def search():
+	form = SearchBookForm()
+	if form.validate_on_submit():
+		results = Book.query.whoosh_search(form.search.data, MAX_SEARCH_RESULTS).all()
+		return render_template('user_books.html', user_books = results)
+	else:
+		flash_errors(form)
+    	flash('ERROR! Could not find book.', 'error')
 
 @book_blueprint.route('/book/<book_id>')
 def book_details(book_id):

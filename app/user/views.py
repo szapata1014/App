@@ -1,11 +1,11 @@
-from flask import render_template, Blueprint, request, url_for, flash, redirect
+from flask import render_template, Blueprint, request, url_for, flash, redirect, g
 from sqlalchemy.exc import IntegrityError
 from flask_login import login_user, current_user, login_required, logout_user
 from flask_mail import Message
 from threading import Thread
 from itsdangerous import URLSafeTimedSerializer
 from datetime import datetime
-
+from app.book.forms import SearchBookForm
 from app.models import User
 from .forms import RegisterForm, LoginForm, EmailForm, PasswordForm
 from app import db, mail, app
@@ -44,6 +44,10 @@ def send_password_reset_email(user_email):
 	html = render_template('email_password_reset.html', password_reset_url=password_reset_url)
    
 	send_email('Password Reset Requested', [user_email], html)
+
+@user_blueprint.before_request
+def before_request():
+    g.searchform = SearchBookForm()
 
 @user_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
@@ -228,6 +232,3 @@ def admin_view_users():
         users = User.query.order_by(User.id).all()
         return render_template('admin_view_users.html', users=users)
     return redirect(url_for('stocks.watch_list'))
-
-
-

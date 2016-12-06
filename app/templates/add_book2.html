@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% from "_form_macros.html" import render_field %}
+
+{% block content %}
+ 
+ 
+<div class="add-book">
+ 
+<div class="page-header">
+ 
+<h2>Add a New Book</h2>
+ 
+  </div>
+ 
+ 
+ 
+<form action="{{ url_for('book.add_book') }}" method="post" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+   
+<dl>
+      {{ render_field(form.title, placeholder="Enter Book Title") }}
+      {{ render_field(form.isbn, placeholder="Enter ISBN") }}
+      {{ render_field(form.book_image) }}
+    </dl>
+     
+    <button class="btn btn-sm btn-success" type="submit">Add Book</button>
+  </form>
+ 
+</div>
+ 
+ 
+{% endblock %}
+

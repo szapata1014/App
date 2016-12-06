@@ -12,6 +12,7 @@ else:
 class Book(db.Model):
 	__tablename__ = 'book'
 	__bind_key__ = 'appdb'
+	__searchable__ = ['title', 'isbn']
 
 	id = db.Column(db.Integer, primary_key=True)
 	title = db.Column(db.String, nullable=False)
@@ -119,3 +120,4 @@ class BookSearch(db.Model):
 
 if enable_search:
 	whooshalchemy.whoosh_index(app, BookSearch)
+	whooshalchemy.whoosh_index(app, Book)

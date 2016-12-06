@@ -35,8 +35,10 @@
           <ul class="nav navbar-nav">
             {% if current_user.is_authenticated %}
               <li><a href="{{ url_for('book.user_books') }}">My Book Shelf</a></li>
-              <li><a href="{{ url_for('book.search_book') }}">Add Book</a></li>
+              <li><a href="{{ url_for('book.add_book') }}">Add Book</a></li>
+              <li><form class="navbar-form" action="{{ url_for('book.search') }}" method="post" name="search"> {{ g.searchform.hidden_tag() }}{{ g.searchform.search(size=20) }}<input type="submit" value="Search"></form><li>
               <li><a href="{{ url_for('user.logout') }}">Log Out</a></li>
+
 	      {% if current_user.role == "admin" %}
               <li><a href="{{ url_for('user.admin_view_users') }}">View All Users (Admin)</a></li>
 	      {% endif %}
