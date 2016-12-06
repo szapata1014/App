@@ -14,6 +14,12 @@ def flash_errors(form):
 
 
 @book_blueprint.route('/')
+def home():
+	return render_template('landingpage.html')
+
+
+@book_blueprint.route('/public_books')
+@login_required
 def public_books():
 	all_public_books = Book.query.filter_by(is_public=True)
 	return render_template('public_books.html', public_books = all_public_books)

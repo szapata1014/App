@@ -11,6 +11,10 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="shortcut icon" href="http://4.bp.blogspot.com/-cVGjtSvMGos/ULY1z537kCI/AAAAAAAAAdE/y2ORczr6AmY/s1600/bookstack.png"></link>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic">
+    <link rel="stylesheet" href="static/css/user.css">
+    <link rel="stylesheet" href="static/css/Brands.css">
+
   </head>
   <body>
     <!-- Static navbar -->
@@ -24,7 +28,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{{ url_for('book.public_books') }}">Explore Your Shelf LOGO</a>
+          <a class="navbar-brand" href="{{ url_for('book.public_books') }}">Explore Your Shelf</a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="book-navbar-collapse-1">
@@ -64,14 +68,23 @@
         {% for info_message in get_flashed_messages(category_filter=["info"]) %}
           <div class="alert alert-info alert-dismissible">{{ info_message }}</div>
         {% endfor %}
+
+
         <!-- child template -->
         {% block content %}
         {% endblock %}
+
+
       </div>
-      <div class="footer">
-        <hr>
-        <p>SZ & CB - 2016</p>
-      </div>
+      <div class="brands"></div>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h5>Explore Your Shelf © 2016</h5></div>
+            </div>
+        </div>
+    </footer>
     </div><!-- /.container -->
     <!-- scripts -->
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>

@@ -45,7 +45,6 @@ def send_password_reset_email(user_email):
    
 	send_email('Password Reset Requested', [user_email], html)
 
-
 @user_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     	form = RegisterForm(request.form)
