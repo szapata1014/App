@@ -26,6 +26,7 @@
  
       <div class="panel panel-info">
         <div class="panel-heading">Statistics</div>
+        <div class="panel-body">Credits: {{ current_user.credits }}</div>
         <div class="panel-body">Member since: {{ current_user.registered_on.strftime("%A %B %d, %Y") }}</div>
         {% if current_user.last_logged_in != None %}
           <div class="panel-body">Last Logged In: {{ current_user.last_logged_in.strftime("%A %B %d, %Y") }}</div>

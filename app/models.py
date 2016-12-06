@@ -16,15 +16,19 @@ class Book(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	title = db.Column(db.String, nullable=False)
 	isbn = db.Column(db.String, nullable=False)
+	summary = db.Column(db.String, nullable=False)
 	is_public = db.Column(db.Boolean, nullable=False)
+	is_available = db.Column(db.Boolean, nullable=False)
 	image_filename = db.Column(db.String, default=None, nullable=True)
 	image_url = db.Column(db.String, default=None, nullable=True)
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-	def __init__(self, title, isbn, user_id, is_public, image_filename=None, image_url=None):
+	def __init__(self, title, isbn, summary, user_id, is_public, is_available, image_filename=None, image_url=None):
 		self.title = title
 		self.isbn = isbn
+		self.summary = summary
 		self.is_public = is_public
+		self.is_available = is_available
 		self.image_filename = image_filename
 		self.image_url = image_url
  		self.user_id = user_id
@@ -39,6 +43,7 @@ class User(db.Model):
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	email = db.Column(db.String, unique=True, nullable=False)
     	password_plaintext = db.Column(db.String, nullable=False)
+	credits = db.Column(db.Integer, nullable = False)
  	authenticated = db.Column(db.Boolean, default=False)
 	email_confirmation_sent_on = db.Column(db.DateTime, nullable=True)
     	email_confirmed = db.Column(db.Boolean, nullable=True, default=False)
@@ -49,9 +54,10 @@ class User(db.Model):
 	role = db.Column(db.String, default = 'user')
 	books = db.relationship('Book', backref='user', lazy='dynamic')
 
-    	def __init__(self, email, password_plaintext, email_confirmation_sent_on=None, role = 'user'):
+    	def __init__(self, email, password_plaintext, credits, email_confirmation_sent_on=None, role = 'user'):
         	self.email = email
         	self.password_plaintext = password_plaintext
+		self.credits = credits
 		self.authenticated = False
 		self.email_confirmation_sent_on = email_confirmation_sent_on
         	self.email_confirmed = False

@@ -54,6 +54,7 @@ def register():
             		try:
                 		new_user = User(form.email.data, form.password.data)
                 		new_user.authenticated = True
+				new_user.credits = 1
                 		db.session.add(new_user)
                 		db.session.commit()
 				login_user(new_user)

@@ -7,11 +7,29 @@
   </div>
  
   <div class="row">
+    {% if book.Book.image_url %}
+    <div class = "panel panel-primary">
+      <div class="panel-heading">Cover</div>
+      <div class="panel-body">
+        <img src="{{ book.Book.image_url }}" alt="{{ book.Book.image_filename }}">
+      </div>
+    </div>
+    {% endif %}
+
     <div class="panel panel-primary">
       <div class="panel-heading">ISBN</div>
       <div class="panel-body">{{ book.Book.isbn }}</div>
     </div>
  
+    <div class="panel panel-primary">
+      <div class="panel-heading">Available?</div>
+      {% if book.Book.is_available %}
+        <div class="panel-body">Yes</div>
+      {% else %}
+        <div class="panel-body">No</div>
+      {% endif %}
+    </div>
+
     <div class="panel panel-primary">
       <div class="panel-heading">Public or Private</div>
       {% if book.Book.is_public %}
@@ -26,10 +44,15 @@
       <div class="panel-body">{{ book.User.email }}</div>
     </div>
 
-    {% if book.Book.image_url %}
-	<img src="{{ book.Book.image_url }}" alt="{{ book.Book.image_filename }}">
+    {% if not current_user.email == book.User.email %}
+      {% if current_user.credits == 1 %}
+      <div class="panel panel-primary">
+        <div class="panel-heading">Request Book</div>
+        <div class="panel-body"><a href="#">Click here to send request link to book owner (cost = 1 credit)</a></div>
+      </div>
+      {% endif%}
     {% endif %}
-  
+
   </div>
 </div>`
  

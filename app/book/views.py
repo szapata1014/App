@@ -60,7 +60,7 @@ def search_results(query):
 		if form.validate_on_submit():
 			#filename = images.save(request.files['book_image'])
 			#url = images.url(filename)
-			new_book = Book(form.title.data, form.isbn.data, current_user.id, True)
+			new_book = Book(form.title.data, form.isbn.data, form.summary.data, current_user.id, True, True)
 			db.session.add(new_book)
 			db.session.commit()
 			flash('New book, {}, added!'.format(new_book.title), 'success')

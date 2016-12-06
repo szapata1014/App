@@ -10,8 +10,10 @@
 {{ form.csrf_token }}
     <dl>
         {{ render_field(form.title, value=books.title) }}
-         {{ render_field(form.isbn, value=books.isbn) }} 
+        {{ render_field(form.isbn, value=books.isbn) }}
+        {{ render_field(form.summary, value=books.summary) }}
     </dl>
     <button class="btn btn-sm btn-success" type="submit">Add Book</button>
 </form>
-{% endfor %} {% endblock %}
+{% endfor %} 
+{% endblock %}

@@ -8,6 +8,7 @@ from app import images
 class AddBookForm(Form):
 	title = StringField('Book Title', validators=[DataRequired()])
 	isbn = StringField('ISBN', validators=[DataRequired()])
+	summary = StringField('Summary', validators=[DataRequired()])
 	book_image = FileField('Book Image', validators=[FileRequired(), FileAllowed(images, 'Images only!')])
 
 class SearchBookForm(Form):
@@ -16,5 +17,5 @@ class SearchBookForm(Form):
 class AddBookFromSearch(Form):
 	title = HiddenField( validators=[DataRequired()])
 	isbn = HiddenField( validators=[DataRequired()])
-	#book_image = HiddenField( validators=[FileRequired()])
-	#summary = HiddenField( validators=[DataRequired()])
+	#book_image = HiddenField( validators=[FileRequired(), FileAllowed(images)])
+	summary = HiddenField( validators=[DataRequired()])
