@@ -1,9 +1,17 @@
-from app import db
+from app import db, app
 from sqlalchemy.ext.hybrid import hybrid_method
 from datetime import datetime
 
+import sys
+if sys.version_info >= (3,0):
+	enable_search = False
+else:
+	enable_search = True
+	import flask_whooshalchemy as whooshalchemy
+
 class Book(db.Model):
 	__tablename__ = 'book'
+	__bind_key__ = 'appdb'
 
 	id = db.Column(db.Integer, primary_key=True)
 	title = db.Column(db.String, nullable=False)
@@ -26,6 +34,7 @@ class Book(db.Model):
 
 class User(db.Model):
 	__tablename__ = 'users'
+	__bind_key__ = 'appdb'
 	
 	id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 	email = db.Column(db.String, unique=True, nullable=False)
@@ -78,3 +87,29 @@ class User(db.Model):
 	
 	def __repr__(self):
         	return '<User {0}>'.format(self.name)
+
+
+class BookSearch(db.Model):
+	__tablename__ = 'booksearch'
+	__bind_key__ = 'searchdb'
+	__searchable__ = ['title', 'isbn']
+
+	id = db.Column(db.Integer, primary_key=True)
+	title = db.Column(db.String, nullable=False)
+	isbn = db.Column(db.String, nullable=False)
+	image_filename = db.Column(db.String, default=None, nullable=True)
+	image_url = db.Column(db.String, default=None, nullable=True)
+	summary = db.Column(db.String, default=None,nullable=True)
+
+	def __init__(self, title, isbn, image_filename=None, image_url=None, summary=None):
+		self.title = title
+		self.isbn = isbn
+		self.image_filename = image_filename
+		self.image_url = image_url
+		self.summary = summary
+
+	def __repr__(self):
+		return '<title {}'.format(self.title)
+
+if enable_search:
+	whooshalchemy.whoosh_index(app, BookSearch)

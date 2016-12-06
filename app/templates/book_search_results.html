@@ -1,0 +1,17 @@
+{% extends "layout.html" %} 
+{% from "_hidden_form_macros.html" import render_field %} 
+
+{% block content %}
+
+<h1>Search results for "{{ query }}":</h1>
+{% for books in results %} 
+{% include 'book.html' %}
+<form action="{{ url_for('book.search_results', query=query ) }}" method="post" enctype="multipart/form-data">
+{{ form.csrf_token }}
+    <dl>
+        {{ render_field(form.title, value=books.title) }}
+         {{ render_field(form.isbn, value=books.isbn) }} 
+    </dl>
+    <button class="btn btn-sm btn-success" type="submit">Add Book</button>
+</form>
+{% endfor %} {% endblock %}
