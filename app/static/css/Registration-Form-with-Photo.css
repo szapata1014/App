@@ -1,6 +1,7 @@
 .register-photo {
   background:#9f6a5a;
   padding:100px;
+  border-radius: 30px;
 }
 
 .register-photo .image-holder {
@@ -24,7 +25,7 @@
   width:400px;
   background-color:#f3e4b4;
   padding:40px 60px;
-  color:#505e6c;
+  color:#333333;
 }
 
 @media (max-width:991px) {
