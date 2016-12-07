@@ -8,51 +8,54 @@
   position:relative;
   top:0px;
   left:0px;
+  padding-top:100px;
 }
 .empty_shelf {
   position:relative;
   top:0px;
   left:0px;
+  width: 1100px;
+  height: auto;
 }
 
 .book_spine1{
-  width: 30px;;
+  width: 60px;
   height: auto;
   position: absolute;
   left:160px;
-  bottom:95px;
+  bottom:99px;
 }
 
 .book_spine2{
-  width: 30px;;
+  width: 60px;
   height: auto;
   position: absolute;
-  left:180px;
-  bottom:95px;;
+  left:195px;
+  bottom:102px;;
 }
 
 .book_spine3{
-  width: 30px;;
+  width: 60px;
   height: auto;
   position: absolute;
-  left:200px;
-  bottom:95px;;
+  left:230px;
+  bottom:98px;;
 }
 
 .book_spine4{
-  width: 30px;;
+  width: 60px;
   height: auto;
   position: absolute;
-  left:220px;
-  bottom:95px;;
+  left:265px;
+  bottom:100px;;
 }
 
 .book_spine5{
-  width: 30px;;
+  width: 60px;
   height: auto;
   position: absolute;
-  left:240px;
-  bottom:95px;;
+  left:300px;
+  bottom:101px;;
 }
 
 .navbar-default .navbar-brand {

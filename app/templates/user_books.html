@@ -7,7 +7,7 @@
   <div class="bookshelf">
     <img src="{{ url_for('static', filename='img/bookshelf/empty_shelf.png') }}" class="empty_shelf" alt="Responsive image">
       {% for book in user_books %}
-        <img src="{{ url_for('static', filename='img/bookshelf/bookspine') }}{{loop.index}}.png" class="book_spine{{ loop.index }}" alt="Responsive image">
+        <img src="{{ url_for('static', filename='img/bookshelf/bookspine') }}{{loop.index}}.png" class="book_spine{{ loop.index }}"onError="this.style.display = 'none';" alt="">
       {% endfor %}
   </div>
 
