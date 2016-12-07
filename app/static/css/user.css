@@ -1,11 +1,27 @@
 .navbar {
   margin-bottom:0;
   border:none;
+  border-radius: 3px;
+  background: #333333;
 }
+
+.navbar-default .navbar-brand {
+  color:#9b9b9b;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #9b9b9b!important;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+    color: #5e5e5e!important;
+}
+
 
 .navbar-brand .glyphicon {
   margin-right:6px;
 }
+
 
 div.iphone-mockup {
   position:relative;

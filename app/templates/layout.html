@@ -39,22 +39,24 @@
             {% if current_user.is_authenticated %}
               <li><a href="{{ url_for('book.user_books') }}">My Book Shelf</a></li>
               <li><a href="{{ url_for('book.add_book') }}">Add Book</a></li>
-              <li><form class="navbar-form" action="{{ url_for('book.search') }}" method="post" name="search"> {{ g.searchform.hidden_tag() }}{{ g.searchform.search(placeholder="Search Available Books",class_='form-control') }}<button class="btn btn-sm btn-success" type="search">Search</button></form><li>
-              <li><a href="{{ url_for('user.logout') }}">Log Out</a></li>
-
-	      {% if current_user.role == "admin" %}
-              <li><a href="{{ url_for('user.admin_view_users') }}">View All Users (Admin)</a></li>
-	      {% endif %}
-            {% else %}
-              <li><a href="{{ url_for('user.register') }}">Register</a></li>
-              <li><a href="{{ url_for('user.login') }}">Log In</a></li>
+              <li><form class="navbar-form" action="{{ url_for('book.search') }}" method="post" name="search"> {{ g.searchform.hidden_tag() }}{{ g.searchform.search(placeholder="Search Available Books",class='form-control form-control') }}<button class="btn btn-default btn-success" type="search">Search</button></form><li>
             {% endif %}
           </ul>
           <ul class="nav navbar-nav navbar-right">
             {% if current_user.is_authenticated %}
-              <li><a href="{{ url_for('user.user_profile') }}">{{current_user.email}}</a></li>
+            	  {% if current_user.role == "admin" %}
+                  <li><a href="{{ url_for('user.admin_view_users') }}">View All Users (Admin)</a></li>
+	              {% endif %}
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="{{ url_for('user.user_profile') }}">My Profile</a></li>
+                  <li><a href="{{ url_for('user.logout') }}">Log Out</a></li>
+                </ul>
+              </li>
             {% else %}
-              <li><a>Welcome!</a ></li>
+              <li><a href="{{ url_for('user.register') }}">Register</a></li>
+              <li><a href="{{ url_for('user.login') }}">Log In</a></li>
             {% endif %}
           </ul>
         </div><!--/.nav-collapse -->
