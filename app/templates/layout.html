@@ -50,7 +50,7 @@
                   <li><a href="{{ url_for('user.admin_view_users') }}">View All Users (Admin)</a></li>
 	              {% endif %}
               <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span><span class="caret"></span></a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="">{{current_user.email}}  <span class="glyphicon glyphicon-user"></span><span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="{{ url_for('user.user_profile') }}">My Profile</a></li>
                   <li><a href="{{ url_for('user.logout') }}">Log Out</a></li>

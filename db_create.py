@@ -8,10 +8,13 @@ db.create_all(bind='appdb')
 admin_user = User(email='exploreyourshelf@gmail.com', password_plaintext='admin', role ='admin', credits=1)
 user1 = User('sofiacamizapata@gmail.com', 'password', credits=1)
 user2 = User('szapata1@stevens.edu', 'password', credits=1)
+user3 = User('cbean03@gmail.com', 'password', credits=1)
 
 db.session.add(admin_user)
 db.session.add(user1)
 db.session.add(user2)
+db.session.add(user3)
+
 
 # we shouldn't need this line but for some reason we do
 admin_user = User.query.filter_by(email='exploreyourshelf@gmail.com').first()
@@ -24,13 +27,13 @@ book2 = Book('Fantastic Beasts and Where to Find Them', '9781408834824', "A copy
 book3 = Book('The BFG', '9780142410387', "Ten-year-old Sophie is in for the adventure of a lifetime when she meets the Big Friendly Giant (Mark Rylance). Naturally scared at first, the young girl soon realizes that the 24-foot behemoth is actually quite gentle and charming. As their friendship grows, Sophie's presence attracts the unwanted attention of Bloodbottler, Fleshlumpeater and other giants. After traveling to London, Sophie and the BFG must convince Queen Victoria to help them get rid of all the bad giants once and for all.", user1.id, True, True, 'BFG.jpg', bookurl+'/BFG.jpg')
 
 
-book4 = Book("Harry Potter and the Sorcerer's Stone", '9780590353427',"The first of J.K. Rowling's popular children's novels about Harry Potter, a boy who learns on his eleventh birthday that he is the orphaned son of two powerful wizards and possesses unique magical powers of his own. He is summoned from his life as an unwanted child to become a student at Hogwarts, an English boarding school for wizards. There, he meets several friends who become his closest allies and help him discover the truth about his parents' mysterious deaths.", user1.id, True, True, 'HP1.jpg', bookurl+'/HP1.jpg')
+book4 = Book("Harry Potter and the Prizoner of Azkaban", '9780590353452',"Harry Potter is lucky to reach the age of thirteen, since he has already survived the murderous attacks of the feared Dark Lord on more than one occasion. But his hopes for a quiet term concentrating on Quidditch are dashed when a maniacal mass-murderer escapes from Azkaban, pursued by the soul-sucking Dementors who guard the prison. It's assumed that Hogwarts is the safest place for Harry to be. But is it a coincidence that he can feel eyes watching him in the dark, and should he be taking Professor Trelawney's ghoulish predictions seriously?", user2.id, True, True, 'HP3.jpg', bookurl+'/HP3.jpg')
 
 book5 = Book("You Deserve a Drink", '9780142181676', "The book details humorous anecdotes and stories of Hart's life, with a cocktail recipe accompanying each chapter.", user2.id, True, True, 'deservedrink.jpg', bookurl+'/deservedrink.jpg')
 
 book6 = Book("Life of Pi",'0676973760',"Life of Pi is a Canadian fantasy adventure novel by Yann Martel published in 2001. The protagonist, Piscine Molitor 'Pi' Patel, an Indian boy from Pondicherry, explores issues of spirituality and practicality from an early age. He survives 227 days after a shipwreck while stranded on a lifeboat in the Pacific Ocean with a Bengal tiger named Richard Parker.",user2.id, True, True, 'LifePI.jpg', bookurl+'/LifePI.jpg')
 
-book7 = Book("Harry Potter and the Half-Blood Prince",'0747581088',"Harry Potter and the Half-Blood Prince is the sixth and penultimate novel in the Harry Potter series, written by British author J. K. Rowling. Set during protagonist Harry Potter's sixth year at Hogwarts, the novel explores the past of Harry's nemesis, Lord Voldemort, and Harry's preparations for the final battle against Voldemort alongside his headmaster and mentor Albus Dumbledore.",user1.id, True, True, 'HP6.jpg', bookurl+'/HP6.jpg')
+book7 = Book("Harry Potter and the Half-Blood Prince",'0747581088',"Harry Potter and the Half-Blood Prince is the sixth and penultimate novel in the Harry Potter series, written by British author J. K. Rowling. Set during protagonist Harry Potter's sixth year at Hogwarts, the novel explores the past of Harry's nemesis, Lord Voldemort, and Harry's preparations for the final battle against Voldemort alongside his headmaster and mentor Albus Dumbledore.",user3.id, True, True, 'HP6.jpg', bookurl+'/HP6.jpg')
 
 book8 = Book("The Great Gatsby",'9781447225928',"The Great Gatsby is a 1925 novel written by American author F. Scott Fitzgerald that follows a cast of characters living in the fictional town of West Egg on prosperous Long Island in the summer of 1922. The story primarily concerns the young and mysterious millionaire Jay Gatsby and his quixotic passion and obsession for the beautiful former debutante Daisy Buchanan. Considered to be Fitzgerald's magnum opus, The Great Gatsby explores themes of decadence, idealism, resistance to change, social upheaval, and excess, creating a portrait of the Jazz Age or the Roaring Twenties that has been described as a cautionary tale regarding the American Dream.",user2.id, True, True)
 
@@ -41,6 +44,8 @@ book10 = Book("The Da Vinci Code",'9780552159715',"The Da Vinci Code is a 2003 m
 book11 = Book("The Alchemist",'9780061122415',"Paulo Coelho's masterpiece tells the magical story of Santiago, an Andalusian shepherd boy who yearns to travel in search of a worldly treasure as extravagant as any ever found.The story of the treasures Santiago finds along the way teaches us, as only a few stories can, about the essential wisdom of listening to our hearts, learning to read the omens strewn along life's path, and, above all, following our dreams.",user2.id,True,True)
 
 book12 = Book("The Catcher in the Rye",'9781476744834',"The Catcher in the Rye is a 1951 novel by J. D. Salinger. A controversial novel originally published for adults, it has since become popular with adolescent readers for its themes of teenage angst and alienation. It has been translated into almost all of the world's major languages. Around 1 million copies are sold each year with total sales of more than 65 million books.The novel's protagonist Holden Caulfield has become an icon for teenage rebellion. The novel also deals with complex issues of innocence, identity, belonging, loss, and connection.",user2.id,True,True)
+
+book13 = Book("Harry Potter and the Chamber of Secrets", "9780747560722", "The Dursleys were so mean and hideous that summer that all Harry Potter wanted was to get back to the Hogwarts School for Witchcraft and Wizardry. But just as he's packing his bags, Harry receives a warning from a strange, impish creature named Dobby who says that if Harry Potter returns to Hogwarts, disaster will strike.", user3.id, True, True, 'HP2.jpg', bookurl+"/HP2.jpg")
 
 db.session.add(book1)
 db.session.add(book2)
@@ -54,6 +59,7 @@ db.session.add(book9)
 db.session.add(book10)
 db.session.add(book11)
 db.session.add(book12)
+db.session.add(book13)
 
 db.session.commit()
 
