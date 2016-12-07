@@ -39,7 +39,9 @@
             {% if current_user.is_authenticated %}
               <li><a href="{{ url_for('book.user_books') }}">My Book Shelf</a></li>
               <li><a href="{{ url_for('book.add_book') }}">Add Book</a></li>
-              <li><form class="navbar-form" action="{{ url_for('book.search') }}" method="post" name="search"> {{ g.searchform.hidden_tag() }}{{ g.searchform.search(placeholder="Search Available Books",class='form-control form-control') }}<button class="btn btn-default btn-success" type="search">Search</button></form><li>
+              <li><form class="navbar-form" action="{{ url_for('book.search') }}" method="post" name="search"> {{ g.searchform.hidden_tag() }}{{ g.searchform.search(placeholder="Search Available Books",class='form-control form-control') }}
+                <input type="submit" class="form-control" value="Search">
+                </form><li>
             {% endif %}
           </ul>
           <ul class="nav navbar-nav navbar-right">

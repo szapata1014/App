@@ -7,50 +7,44 @@
   </div>
  
   <div class="row">
+    <div class="col-sm-4">
     {% if book.Book.image_url %}
-    <div class = "panel panel-primary">
-      <div class="panel-heading">Cover</div>
-      <div class="panel-body">
-        <img src="{{ book.Book.image_url }}" alt="{{ book.Book.image_filename }}">
-      </div>
-    </div>
+        <img src="{{ book.Book.image_url }}" class="book-details-img" alt="{{ book.Book.image_filename }}">
     {% endif %}
-
-    <div class="panel panel-primary">
-      <div class="panel-heading">ISBN</div>
-      <div class="panel-body">{{ book.Book.isbn }}</div>
+      <p>ISBN: {{ book.Book.isbn }}</p>
     </div>
- 
-    <div class="panel panel-primary">
-      <div class="panel-heading">Available?</div>
+ <div class="col-sm-6">
+   <h3> Summary: </h3> 
+    <p>{{ book.Book.summary }} </p>
+<hr>
+      <h4> Availabile? : </h4> 
       {% if book.Book.is_available %}
-        <div class="panel-body">Yes</div>
+        <p>Yes</p>
       {% else %}
-        <div class="panel-body">No</div>
+        <p>No</p>
       {% endif %}
-    </div>
 
-    <div class="panel panel-primary">
-      <div class="panel-heading">Public or Private</div>
-      {% if book.Book.is_public %}
-        <div class="panel-body">Public</div>
-      {% else %}
-        <div class="panel-body">Private</div>
-      {% endif %}
-    </div>
- 
-    <div class="panel panel-primary">
-      <div class="panel-heading">User</div>
-      <div class="panel-body">{{ book.User.email }}</div>
-    </div>
-
-    {% if not current_user.email == book.User.email %}
+      <h4> Current Owner : </h4>
+        <p>{{ book.User.email }}</p>
+        
+ {% if current_user.email == book.User.email %}
+      <form>
+        <input type="radio" name="status" value="public" {% if book.Book.is_public %} checked {% endif %}> Public
+        <input type="radio" name="status" value="private"{% if not book.Book.is_public %} checked {% endif %} > Private
+      </form> 
+      {% endif%}
+<br>
+          {% if not current_user.email == book.User.email %}
       {% if current_user.credits == 1 %}
           <form action="{{ url_for('book.request_book', book=book.Book.title, rUser=current_user.email, bUser=book.User.email) }}" method="post" name="search"> 
             <button class="btn btn-sm btn-success" type="submit">Request this Book!</button>
           </form>
       {% endif%}
     {% endif %}
+ 
+ </div>
+
+
 
   </div>
 </div>

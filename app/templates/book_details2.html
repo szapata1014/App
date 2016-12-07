@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block content %}
+ 
+<div class="user-profile">
+  <div class="page-header">
+    <h2>{{ book.Book.title }}</h2>
+  </div>
+ 
+  <div class="row">
+    {% if book.Book.image_url %}
+    <div class = "panel panel-primary">
+      <div class="panel-heading">Cover</div>
+      <div class="panel-body">
+        <img src="{{ book.Book.image_url }}" alt="{{ book.Book.image_filename }}">
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">ISBN</div>
+      <div class="panel-body">{{ book.Book.isbn }}</div>
+    </div>
+ 
+    <div class="panel panel-primary">
+      <div class="panel-heading">Available?</div>
+      {% if book.Book.is_available %}
+        <div class="panel-body">Yes</div>
+      {% else %}
+        <div class="panel-body">No</div>
+      {% endif %}
+    </div>
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">Public or Private</div>
+      {% if book.Book.is_public %}
+        <div class="panel-body">Public</div>
+      {% else %}
+        <div class="panel-body">Private</div>
+      {% endif %}
+    </div>
+ 
+    <div class="panel panel-primary">
+      <div class="panel-heading">User</div>
+      <div class="panel-body">{{ book.User.email }}</div>
+    </div>
+
+    {% if not current_user.email == book.User.email %}
+      {% if current_user.credits == 1 %}
+          <form action="{{ url_for('book.request_book', book=book.Book.title, rUser=current_user.email, bUser=book.User.email) }}" method="post" name="search"> 
+            <button class="btn btn-sm btn-success" type="submit">Request this Book!</button>
+          </form>
+      {% endif%}
+    {% endif %}
+
+  </div>
+</div>
+ 
+{% endblock %}

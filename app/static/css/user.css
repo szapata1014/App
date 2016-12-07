@@ -58,6 +58,11 @@
   bottom:101px;;
 }
 
+.book-details-img {
+  width:250px;
+  height: auto;
+}
+
 .navbar-default .navbar-brand {
   color:#9b9b9b;
 }
