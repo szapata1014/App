@@ -55,9 +55,8 @@ def register():
     	if request.method == 'POST':
         	if form.validate_on_submit():
             		try:
-                		new_user = User(form.email.data, form.password.data)
+                		new_user = User(form.email.data, form.password.data, 1)
                 		new_user.authenticated = True
-				new_user.credits = 1
                 		db.session.add(new_user)
                 		db.session.commit()
 				login_user(new_user)

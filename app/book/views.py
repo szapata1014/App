@@ -3,6 +3,10 @@ from flask_login import login_required, current_user
 from app.models import Book, User, BookSearch
 from .forms import AddBookForm, SearchBookForm, AddBookFromSearch
 from app import db, images
+from threading import Thread
+from flask_mail import Message
+from itsdangerous import URLSafeTimedSerializer
+from app import app, mail
 MAX_SEARCH_RESULTS = 20
 
 book_blueprint = Blueprint('book', __name__)
@@ -11,6 +15,61 @@ def flash_errors(form):
 	for field, errors in form.errors.items():
 		for error in errors:
 			flash(u"Error in the %s field - %s" % (getattr(form, field).label.text,error), 'info')
+
+def send_async_email(msg):
+	with app.app_context():
+		mail.send(msg)
+
+def send_email(subject, recipients, html_body):
+	msg = Message(subject, recipients=recipients)
+	msg.html = html_body
+	thr = Thread(target=send_async_email, args=[msg])
+	thr.start()	
+
+def send_request_email(requesting_user_email, book_owner_email):
+	confirm_serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+	confirm_url = url_for('book.confirm_request', token=confirm_serializer.dumps(requesting_user_email, salt='email-confirmation-salt'), token2=confirm_serializer.dumps(book_owner_email, salt='email-confirmation-salt'),
+        _external=True)
+
+	deny_url = url_for('book.deny_request', token=confirm_serializer.dumps(requesting_user_email, salt='email-confirmation-salt'), token2=confirm_serializer.dumps(book_owner_email, salt='email-confirmation-salt'),
+        _external=True)
+    
+	html = render_template('email_request_book.html',requesting_user_email=requesting_user_email, confirm_url=confirm_url, deny_url=deny_url)
+    
+	send_email('Someone wants your book!', [book_owner_email], html)
+
+def send_confirm_email(requesting_user_email, book_owner_email):
+	html = render_template('email_confirm_request.html', book_owner_email=book_owner_email)
+    
+	send_email("There's a book coming your way!", [requesting_user_email], html)
+
+def send_deny_email(requesting_user_email, book_owner_email):
+	html = render_template('email_deny_request.html', book_owner_email=book_owner_email)
+    
+	send_email("Sorry, the book you want can't be sent.", [requesting_user_email], html)
+
+@book_blueprint.route('/request_book/<book>/<rUser>/<bUser>', methods=['POST'])
+def request_book(book, rUser, bUser):
+	send_request_email(rUser, bUser)
+	flash('Requesting book, {}!'.format(book), 'success')
+	return redirect(url_for('book.user_books'))
+
+@book_blueprint.route('/confirm_request/<token>/<token2>')
+def confirm_request(token, token2):
+	confirm_serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+	requesting_user_email = confirm_serializer.loads(token, salt='email-confirmation-salt')
+	book_owner_email = confirm_serializer.loads(token2, salt='email-confirmation-salt')
+	send_confirm_email(requesting_user_email, book_owner_email)
+	return redirect(url_for('book.home'))
+
+@book_blueprint.route('/deny_request/<token>/<token2>')
+def deny_request(token, token2):
+	confirm_serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+	requesting_user_email = confirm_serializer.loads(token, salt='email-confirmation-salt')
+	book_owner_email = confirm_serializer.loads(token2, salt='email-confirmation-salt')
+	send_deny_email(requesting_user_email, book_owner_email)
+	return redirect(url_for('book.home'))	
+
 
 @book_blueprint.before_request
 def before_request():

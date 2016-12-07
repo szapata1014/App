@@ -46,10 +46,9 @@
 
     {% if not current_user.email == book.User.email %}
       {% if current_user.credits == 1 %}
-      <div class="panel panel-primary">
-        <div class="panel-heading">Request Book</div>
-        <div class="panel-body"><a href="#">Click here to send request link to book owner (cost = 1 credit)</a></div>
-      </div>
+          <form action="{{ url_for('book.request_book', book=book.Book.title, rUser=current_user.email, bUser=book.User.email) }}" method="post" name="search"> 
+            <button class="btn btn-sm btn-success" type="submit">Request this Book!</button>
+          </form>
       {% endif%}
     {% endif %}
 
