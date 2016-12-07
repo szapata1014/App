@@ -7,44 +7,6 @@
   margin-right:6px;
 }
 
-.hero {
-  background:url(../../static/img/bookshelf.jpg) no-repeat center;
-  background-size:cover;
-  border:none;
-}
-
-@media (min-width:992px) {
-  .hero .get-it {
-    text-align:right;
-    margin-top:80px;
-    padding-right:30px;
-  }
-}
-
-@media (max-width:992px) {
-  .hero .get-it {
-    text-align:center;
-  }
-}
-
-@media (max-width:992px) {
-  .hero .phone-preview {
-    text-align:center;
-  }
-}
-
-.hero .get-it h1, .hero .get-it p {
-  color:#fff;
-  text-shadow:2px 2px 3px rgba(0,0,0,0.3);
-  margin-bottom:40px;
-}
-
-.hero .get-it .btn {
-  margin-left:10px;
-  margin-bottom:10px;
-  text-shadow:none;
-}
-
 div.iphone-mockup {
   position:relative;
   max-width:250px;
@@ -86,6 +48,7 @@ div.iphone-mockup {
 
 .icon-feature {
   text-align:center;
+  padding-left:15px;
 }
 
 .icon-feature .glyphicon {
@@ -93,7 +56,7 @@ div.iphone-mockup {
 }
 
 section.features {
-  background-color:#369;
+  background-color:#a4655c;
   padding:40px 0;
   color:#fff;
 }

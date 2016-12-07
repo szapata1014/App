@@ -1,15 +1,11 @@
 {% extends "layout.html"%}
 {% block content %}
 
-<div class="jumbotron hero">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-4 col-md-pull-3 get-it">
-                    <h1 class="text-center"><strong>Explore Your Shelf</strong></h1>
-                    <p class="text-center"><strong><em>The website designed to help you trade books for FREE! Get started now and recieve a complimentary credit to start off your book trading instantly</em></strong>.</p>
-                    <p class="text-center"><a class="btn btn-primary btn-lg" role="button" href="{{ url_for('user.register') }}">       REGISTER NOW ! </a></p>
-                </div>
-            </div>
+<div id="emptybookshelf">
+        <div class="jumbotron" style="margin-top:40px;">
+            <h1>Explore Your Shelf</h1>
+            <p>The website designed to help you trade books for FREE! Get started now and recieve a complimentary credit to start off your book trading instantly!</p>
+            <p><a class="btn btn-default" role="button" href="{{ url_for('user.register') }}">Click here to register now!</a></p>
         </div>
     </div>
     <section class="features">
@@ -17,12 +13,12 @@
             <div class="row">
                 <div class="col-md-6">
                     <h2 class="text-center">How It Works</h2>
-                    <p class="text-center">Just follow 3 Easy steps to start your book sharing experience now!</p>
+                    <p class="text-center">Just follow 3 Easy steps to start your book sharing experience now! Have Fun exploring your shelf!</p>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" style="padding-right:15px;">
                     <div class="row icon-features">
                         <div class="col-xs-4 icon-feature"><i class="glyphicon glyphicon-user"></i>
-                            <p>1) Create An Account and Recieve A FREE Credit.</p>
+                            <p>1) Create An Account and Recieve A FREE Credit..</p>
                         </div>
                         <div class="col-xs-4 icon-feature"><i class="glyphicon glyphicon-envelope"></i>
                             <p>2) Request Books You Need from Other Members.</p>
@@ -35,12 +31,11 @@
             </div>
         </div>
     </section>
-    <section class="testimonials">
-        <h2 class="text-center">People Love It!</h2>
-        <blockquote>
-            <p>Stop paying for books with real money! Save your cash and start using credits. </p>
-            <footer>Every Explore Your Shelf User Ever</footer>
-        </blockquote>
-    </section>
+    <h2 class="text-center">People Love It!</h2>
+    <blockquote>
+        <p class="text-center">Stop paying for books with real money! Save your cash and start using credits. </p>
+        <footer>Every Explore Your Shelf User Ever</footer>
+    </blockquote>
+   
 
 {% endblock %}

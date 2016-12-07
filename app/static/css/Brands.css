@@ -21,3 +21,39 @@
   vertical-align:middle;
 }
 
+div#emptybookshelf {
+  text-align:center;
+  padding:40px;
+  background:url(../../static/img/bookshelf.jpg);
+  background-size:cover;
+}
+
+#emptybookshelf .jumbotron {
+  border-radius:20px;
+  padding:70px;
+  background-color:rgba(255,255,255,0.75);
+}
+
+a.btn.btn-default {
+  color:#ffffff;
+  background-color:#be5547;
+  border-color:#e39388;
+}
+
+img {
+}
+
+img#logo {
+  max-height:35px;
+  margin-right:10px;
+  margin-top:-3px;
+  display:inline-block;
+}
+
+div.row {
+}
+
+blockquote {
+  text-align:center;
+}
+

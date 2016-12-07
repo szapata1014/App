@@ -1,9 +1,12 @@
 {% extends "layout.html" %}
 {% block content %}
  
-<div class="user-profile">
-  <div class="page-header">
-    <h2>Available Books</h2>
+  <div id="emptybookshelf">
+        <div class="jumbotron" style="margin-top:40px;">
+            <h1>Available Books</h1>
+            <p>Browse through the sites many available books. If you find a book you might want, simply click on the title!</p>
+            <p><a class="btn btn-default" role="button" href="{{ url_for('book.user_books') }}">Click here to explore your personal book shelf</a></p>
+        </div>
   </div>
  
   <table class="table table-striped" id="owned_stock_table">
