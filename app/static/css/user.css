@@ -4,6 +4,56 @@
   border-radius: 3px;
   background: #333333;
 }
+.bookshelf {
+  position:relative;
+  top:0px;
+  left:0px;
+}
+.empty_shelf {
+  position:relative;
+  top:0px;
+  left:0px;
+}
+
+.book_spine1{
+  width: 30px;;
+  height: auto;
+  position: absolute;
+  left:160px;
+  bottom:95px;
+}
+
+.book_spine2{
+  width: 30px;;
+  height: auto;
+  position: absolute;
+  left:180px;
+  bottom:95px;;
+}
+
+.book_spine3{
+  width: 30px;;
+  height: auto;
+  position: absolute;
+  left:200px;
+  bottom:95px;;
+}
+
+.book_spine4{
+  width: 30px;;
+  height: auto;
+  position: absolute;
+  left:220px;
+  bottom:95px;;
+}
+
+.book_spine5{
+  width: 30px;;
+  height: auto;
+  position: absolute;
+  left:240px;
+  bottom:95px;;
+}
 
 .navbar-default .navbar-brand {
   color:#9b9b9b;
