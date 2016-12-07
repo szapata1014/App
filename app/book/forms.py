@@ -17,5 +17,6 @@ class SearchBookForm(FlaskForm):
 class AddBookFromSearch(FlaskForm):
 	title = HiddenField( validators=[DataRequired()])
 	isbn = HiddenField( validators=[DataRequired()])
-	#book_image = HiddenField( validators=[FileRequired(), FileAllowed(images)])
+	img_filename = HiddenField( validators=[DataRequired()])
+	img_url = HiddenField( validators=[DataRequired()])
 	summary = HiddenField( validators=[DataRequired()])

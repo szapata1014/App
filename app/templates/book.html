@@ -1,7 +1,7 @@
 <table>
     <tr valign="top">
-        <td><img ></td>
-        <td><i>{{ books.title }} </i>
+        <td><img src="{{ books.image_url }}" class="add-book-img" alt="{{ books.image_filename }}"></td>
+        <td><h3>{{ books.title }} </h3>
         <br>{{ books.summary }}</td>
     </tr>
 </table>

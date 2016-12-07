@@ -63,6 +63,12 @@
   height: auto;
 }
 
+.add-book-img {
+  width:115px;
+  height: auto;
+  padding-right: 15px;
+}
+
 .navbar-default .navbar-brand {
   color:#9b9b9b;
 }

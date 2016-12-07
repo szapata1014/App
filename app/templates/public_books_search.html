@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="user-profile">
+  <div class="page-header">
+    <h2>Available Books!</h2>
+  </div>
+  <div class="bookshelf">
+    <img src="{{ url_for('static', filename='img/bookshelf/empty_shelf.png') }}" class="empty_shelf" alt="Responsive image">
+      {% for book in user_books %}
+        <img src="{{ url_for('static', filename='img/bookshelf/bookspine') }}{{loop.index}}.png" class="book_spine{{ loop.index }}"onError="this.style.display = 'none';" alt="">
+      {% endfor %}
+  </div>
+
+  <table class="table table-striped" id="owned_stock_table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Current Owner</th>
+        <th>ISBN</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for book in user_books %}
+      <tr>
+        <td><a href="{{ url_for('book.book_details', book_id=book.id) }}">{{ book.title }}</a></td>
+        <td>{{ book.user.email }}</td>
+        <td>{{ book.isbn }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

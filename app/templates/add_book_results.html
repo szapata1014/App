@@ -11,6 +11,8 @@
     <dl>
         {{ render_field(form.title, value=books.title) }}
         {{ render_field(form.isbn, value=books.isbn) }}
+        {{ render_field(form.img_filename, value=books.image_filename)}}
+        {{ render_field(form.img_url, value=books.image_url)}}        
         {{ render_field(form.summary, value=books.summary) }}
     </dl>
     <button class="btn btn-sm btn-success" type="submit">Add Book</button>

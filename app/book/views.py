@@ -126,9 +126,7 @@ def add_results(query):
 	form = AddBookFromSearch()
 	if request.method == 'POST':
 		if form.validate_on_submit():
-			#filename = images.save(request.files['book_image'])
-			#url = images.url(filename)
-			new_book = Book(form.title.data, form.isbn.data, form.summary.data, current_user.id, True, True)
+			new_book = Book(form.title.data, form.isbn.data, form.summary.data, current_user.id, True, True, form.img_filename.data, form.img_url.data)
 			db.session.add(new_book)
 			db.session.commit()
 			flash('New book, {}, added!'.format(new_book.title), 'success')
@@ -136,6 +134,7 @@ def add_results(query):
 		else:
 			flash_errors(form)
 			flash('ERROR! Book was not added.', 'error')
+			return redirect(url_for('book.user_books'))
 
 	else:
 		results = BookSearch.query.whoosh_search(query, MAX_SEARCH_RESULTS).all()
@@ -149,7 +148,7 @@ def search():
 	form = SearchBookForm()
 	if form.validate_on_submit():
 		results = Book.query.whoosh_search(form.search.data, MAX_SEARCH_RESULTS).all()
-		return render_template('user_books.html', user_books = results)
+		return render_template('public_books_search.html', user_books = results)
 	else:
 		flash_errors(form)
     	flash('ERROR! Could not find book.', 'error')
